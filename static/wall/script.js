@@ -34,9 +34,15 @@ grids.forEach((grid, index) => {
     } else {
       const local = localStorage.getItem('user');
       obj = JSON.parse(local);
-      if (local !== null && index == obj.grid) {
-        cTag.innerHTML += `<a href='${obj.userLink}' target='_blank'>${obj.userName}</a>`;
-      }
+      url = `/one/${index}`;
+      fetch(url)
+        .then(response => response.json())
+        .then(one =>{
+          cTag.innerHTML = `This space have been used already by 
+          <a href='${one[0].fields.link}' target='_blank'>${one[0].fields.username}</a>`;
+        })
+        .catch(err => console.log(err))
+
       cancel.style.visibility = "visible";
       cancelDiv.style.transform = "scale(1)";
     }
@@ -124,6 +130,22 @@ document.addEventListener("DOMContentLoaded", function () {
   let font = selectFont.options[selectFont.selectedIndex].value;
 });
 
+function wallNames(){
+  const url = '/all_json';
+  fetch(url)
+    .then(response => response.json())
+    .then(names => {
+      names.forEach((nm)=>{
+        grids.forEach((grid,index)=>{
+          if(index == nm.fields.grid){
+            grid.innerHTML = `<p style="font-family:${nm.fields.font}">${nm.fields.username}</p>`
+          }
+        })
+      })
+    })
+    .catch(err => console.log(err))
+}
+wallNames();
 // form js
 nickname.onkeyup = () => {
   nameError.style.visibility = "hidden";
@@ -196,7 +218,6 @@ function go(container, index) {
             trueFont &&
             link.value.length > 0
           ) {
-            container.innerHTML = `<p style='font-family:${font};'>${nickname.value}</p>`;
             theGrid.value = index;
             const userObj = {
               grid: index,
@@ -205,9 +226,10 @@ function go(container, index) {
               userLink: link.value,
             };
             localStorage.setItem('user', JSON.stringify(userObj));
-            e.preventDefault();
+            nickname.value = document.querySelector("#name").value;
+            userLink.value = document.querySelector("#link").value;
             off();
-          } else {
+          }else{
             e.preventDefault();
           }
         }else{
@@ -216,7 +238,7 @@ function go(container, index) {
           e.preventDefault();
         }
     }else{
-        localError.innerHTML= 'Be an <a href="../index.html">ALUMNI</a> First!';
+        localError.innerHTML=`Be an <a href="/index">ALUMNI</a> First!`;
           localError.style.visibility = 'visible';
           e.preventDefault();
     }

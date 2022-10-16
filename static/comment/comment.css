@@ -4,6 +4,7 @@
   flex-direction: column;
   width: 100vw;
   padding-bottom: 24px;
+  min-height: 50vh;
 }
 .head {
   font-size: 24px;
@@ -51,6 +52,9 @@
 }
 .paddit {
   padding: 16px;
+}
+.commments{
+  min-height: 50vh;
 }
 .info,
 .commentblock {

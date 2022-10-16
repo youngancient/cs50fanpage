@@ -1,23 +1,33 @@
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Comment, Alumni, Wall
+from django.core import serializers
 # Create your views here.
-all_alumni = Alumni()
 
 def index_view(request):
     if request.method == 'POST':
         mail = request.POST['email']
         note = request.POST['note']
-        if len(mail) > 1 and len(note) > 1:
-            all_alumni.number += 1
+        if len(mail) > 1 and len(note) > 1 and len(Alumni.objects.filter(email=mail)) == 0:
+            all_alumni = Alumni(email=mail)
             all_alumni.save();
     return render(request,'index.html')
 
 def alumni_view(request):
-    return HttpResponse(all_alumni.number)
+    alumni = len(Alumni.objects.all())
+    num = alumni + 200000
+    return HttpResponse(num)
 
-def json_view(request):
-    return HttpResponse('omor e choke')
+def json_wall(request):
+    them = Wall.objects.all()
+    them_js = serializers.serialize('json',them)
+    return HttpResponse(them_js,content_type='application/json')
+
+def one_wall(request,id):
+    them = Wall.objects.filter(grid=id)
+    them_js = serializers.serialize('json',them)
+    return HttpResponse(them_js,content_type='application/json')
 
 def comments(request):
     if request.method == 'POST':
@@ -26,7 +36,7 @@ def comments(request):
         if(len(author) > 1 and len(text) > 1):
             user_comment = Comment(author=author,text=text)
             user_comment.save();
-    comments_dem = Comment.objects.all()
+    comments_dem = Comment.objects.all().order_by('-posted').values()
     return render(request,'comments/comments.html',context={
         'comments':comments_dem
     })
@@ -68,15 +78,9 @@ def cswall(request):
         username = request.POST['name']
         font = request.POST['font']
         grid = request.POST['gridnumber']
-        social_link = request.POST['link']
+        link = request.POST['link']
         if font in fonts_array:
-            user_obj = {
-                'name':username,
-                'font':font,
-                'grid':grid,
-                'link':social_link
-            }
-            json_user = Wall(user_stuff = user_obj)
+            json_user = Wall(username=username,grid=grid,font=font,link=link)
             json_user.save();
     return render(request,'cswall/cswall.html')
 

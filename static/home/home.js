@@ -141,8 +141,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   })
   // animateValue();
-  animateValue("#enrolled", 199000, 200001, 500);
-  animateValue("#menrolled", 199000, 200001, 500);
+function getTotal(){
+  const url = '/alumni_no';
+  fetch(url)
+    .then(response => response.json())
+    .then(num => {
+      animateValue("#enrolled", 199000, num, 500);
+      animateValue("#menrolled", 199000, num, 500);
+    })
+    .catch(err => console.log(err))
+}
+getTotal();
   setInterval(() => {
     word.innerHTML = " ";
     word.innerHTML = "WAS";
@@ -201,3 +210,4 @@ function ValidateEmail(mail)
   }
     return (false)
 }
+

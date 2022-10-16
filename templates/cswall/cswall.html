@@ -18,9 +18,9 @@
                         </div>
                     </div>
                     <div class="mobile-links">
-                        <a href="../index.html" class="" style="margin-top: 0;">HOME</a>
-                        <a href="../fangallery/fangallery.html" class="">FAN GALLERY</a>
-                        <a href="../comments/comments.html" class="">COMMENT</a>
+                        <a href="{% url 'home:index' %}" class="" style="margin-top: 0;">HOME</a>
+                        <a href="{% url 'home:gallery' %}" class="">FAN GALLERY</a>
+                        <a href="{% url 'home:comments' %}" class="">COMMENT</a>
                         <a href="#" class="">CS50 WALL</a>
                     </div> 
                 </div>
@@ -164,16 +164,16 @@
             <div class="grid"></div>
             <div class="grid"></div>
             <div class="grid"></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
-            <div class="grid "></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
         </div>
         <div class="popup form-popup">
             <div class="nothing" onclick="off()"></div>
@@ -209,7 +209,7 @@
             <div class="nothing bdr" onclick="iOff()"></div>
             <div class="info">
                 <div class="think">
-                    <img src="../static/assets/thinkingLady.svg" alt="thinking" class="">
+                    <img src="{% static 'assets/thinkingLady.svg' %}" alt="thinking" class="">
                 </div>
                 <p>Click an empty space on the wall  or click the Add button
                     at the bottom of the page to add to the WALL.
@@ -222,7 +222,7 @@
         <div class="cancel-popup popup">
             <div class="nothing" onclick="cOff()"></div>
             <div class="c-info">
-                <p>This space have been used already by </p>
+                <p></p>
                 <div class="info-btn">
                     <button onclick="cOff()">OK</button>
                 </div>

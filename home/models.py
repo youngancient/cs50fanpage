@@ -22,13 +22,16 @@ class Comment(models.Model):
         ordering = ['-posted']
 
 class Alumni(models.Model):
-    number = models.PositiveIntegerField(default=200000)
+    email = models.EmailField()
 
     def __str__(self):
-        return self.number
+        return self.email
 
 class Wall(models.Model):
-    user_stuff = models.JSONField()
+    grid = models.PositiveIntegerField()
+    username = models.CharField(max_length=31)
+    font = models.TextField()
+    link = models.URLField()
 
     def __str__(self):
-        return self.user_stuff
+        return f'{self.grid} - {self.username}'
