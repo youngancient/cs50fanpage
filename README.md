@@ -1,4 +1,5 @@
 # cs50fanpage
+### My Name is Jude, I am in Lagos, Nigeria.
 ### video-url: 
 ### Project Description
 <h1>My Final Project is 'CS50 Fan Page'. It is a simple website which i made for students of cs50 to appreciate the beauty of the course and its instructors.
